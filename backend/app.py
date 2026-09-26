@@ -992,6 +992,9 @@ if dist.is_dir():
             if quality > 0 and media in ('text/html', '*/*', 'application/json', 'text/markdown'):
                 choices.append((quality, -index, media))
         preferred = max(choices)[2] if choices else 'text/html'
+        if preferred in ('application/json', 'text/markdown') and auth_enabled():
+            if not valid_auth(request, os.environ.get('STILL_AUTH_PASSWORD', '')):
+                return JSONResponse({'detail': 'Password required.'}, status_code=401)
         headers = {**READ_HEADERS, 'Vary': 'Accept'}
         if preferred == 'text/markdown':
             return MarkdownResponse(markdown_journal(agent_snapshot(query)), headers=headers)
