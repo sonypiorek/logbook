@@ -10,7 +10,11 @@ services:
       - key: STILL_DB_PATH
         value: /var/data/still.sqlite3
       - key: STILL_SEED_ON_FIRST_RUN
+        value: "false"
+      - key: STILL_AUTH_ENABLED
         value: "true"
+      - key: STILL_AUTH_PASSWORD
+        sync: false
       - key: PYTHON_VERSION
         value: 3.14.7
       - key: NODE_VERSION
